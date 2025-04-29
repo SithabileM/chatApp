@@ -4,6 +4,8 @@ from .models import Messages,ChatRoom
 from .serializers import UserSerializer,ChatRoomSerializer,MessageSerializer
 from rest_framework import status
 from django.contrib.auth.models import User
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 #from .models import Messages
 # Create your views here.
 
@@ -69,11 +71,12 @@ def get_current_user(request):
         return Response({'error':'User is not authenticated'}, status=401)
 
 @api_view(['GET'])
+@permission_classes(IsAuthenticated)
 def get_messages(request,roomId):
     try:
         messages = Messages.objects.filter(room=roomId)
-        serializer=MessageSerializer(messages)
+        serializer=MessageSerializer(messages, many=True)
         return Response(serializer.data)
-    except:
-        return Response()
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
     
