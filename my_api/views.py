@@ -1,14 +1,17 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes,authentication_classes
 from rest_framework.response import Response
-from .models import Messages,ChatRoom
-from .serializers import UserSerializer,ChatRoomSerializer,MessageSerializer
+from .models import Messages,ChatRoom,Connections
+from .serializers import UserSerializer,ChatRoomSerializer,MessageSerializer,ConnectionsSerializer
 from rest_framework import status
 from django.contrib.auth.models import User
-from rest_framework.decorators import permission_classes
+from django.db.models import Q
+from django.db import migrations
+from .models import ChatRoom
+from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 #from .models import Messages
 # Create your views here.
-
 @api_view(['POST'])
 def post_messages(request):
     serializer=MessageSerializer(data=request.data)
@@ -71,12 +74,36 @@ def get_current_user(request):
         return Response({'error':'User is not authenticated'}, status=401)
 
 @api_view(['GET'])
-@permission_classes(IsAuthenticated)
+#@permission_classes(IsAuthenticated)
 def get_messages(request,roomId):
+    print(roomId)
     try:
         messages = Messages.objects.filter(room=roomId)
         serializer=MessageSerializer(messages, many=True)
         return Response(serializer.data)
     except Exception as e:
         return Response({'error': str(e)}, status=500)
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+def get_connections(request):
+    #Get all users who have the current user as a sender or recipient under Messages
+    messages=Messages.objects.filter(Q(sender=request.user) | Q(recipient=request.user))
+    if messages.exists()==False:
+        return Response({'error':'No Connections found'},status=404)
+    try:
+        senders=messages.values_list('sender_id',flat=True)
+        recipients=messages.values_list('recipient_id',flat=True)
+    except:
+        pass
+    userIds=set(list(senders)+list(recipients))
+    connectedUsers=User.objects.filter(id__in=userIds)
+    
+    data={
+        'mainUser': request.user.id,
+        'connectedUsers': UserSerializer(connectedUsers, many=True).data
+    }
+    serializer=ConnectionsSerializer(data)
+    return Response(serializer.data)
     

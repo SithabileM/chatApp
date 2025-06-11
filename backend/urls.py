@@ -11,7 +11,7 @@ urlpatterns = [
     re_path('login', views.login),
     re_path('signup', views.signup),
     re_path('test_token', views.test_token),
-    path("",include("api.urls"))
+    path("",include("my_api.urls"))
     
 ]
 

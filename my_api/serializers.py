@@ -1,4 +1,4 @@
-from .models import ChatRoom,Messages
+from .models import ChatRoom,Messages,Connections
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -16,3 +16,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta(object):
         model=User
         fields= ['id','username']
+        
+class ConnectionsSerializer(serializers.Serializer):
+    connectedUsers=UserSerializer(many=True,read_only=True)
+    class Mata(object):
+        model=Connections
+        fields=['mainUser','connectedUsers']
