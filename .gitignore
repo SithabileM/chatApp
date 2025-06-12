@@ -1,0 +1,22 @@
+chatAppVenv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.sqlite3
+*.env
+
+# Django
+db.sqlite3
+/static/
+media/
+
+# Node
+node_modules/
+build/
+dist/
+
+# OS & IDE
+.DS_Store
+.vscode/
