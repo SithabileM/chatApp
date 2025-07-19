@@ -1,7 +1,8 @@
-from .models import ChatRoom,Messages,Connections
+from .models import ChatRoom,Messages,Connections,Profile
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
+User=get_user_model()
 class ChatRoomSerializer(serializers.ModelSerializer):
     class Meta(object):
         model=ChatRoom
@@ -15,10 +16,17 @@ class MessageSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta(object):
         model=User
-        fields= ['id','username']
+        #fields='__all__'
+        fields= ['id','username','profile_picture']
         
 class ConnectionsSerializer(serializers.Serializer):
-    connectedUsers=UserSerializer(many=True,read_only=True)
+    connectedUsers=UserSerializer(many=True)
     class Mata(object):
         model=Connections
         fields=['mainUser','connectedUsers']
+        
+class ProfileSerializer(serializers.ModelSerializer):
+    profile_picture=serializers.ImageField(max_length=255,use_url=True)
+    class Meta:
+        model=Profile
+        fields=['profile_picture']

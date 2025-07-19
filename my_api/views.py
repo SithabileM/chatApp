@@ -1,17 +1,20 @@
-from rest_framework.decorators import api_view, permission_classes,authentication_classes
+from rest_framework.decorators import api_view, permission_classes,authentication_classes,parser_classes
 from rest_framework.response import Response
-from .models import Messages,ChatRoom,Connections
-from .serializers import UserSerializer,ChatRoomSerializer,MessageSerializer,ConnectionsSerializer
+from .models import Messages,ChatRoom,Connections,Profile
+from .serializers import UserSerializer,ChatRoomSerializer,MessageSerializer,ConnectionsSerializer,ProfileSerializer
 from rest_framework import status
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.db import migrations
 from .models import ChatRoom
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.parsers import MultiPartParser, FormParser
+
 #from .models import Messages
 # Create your views here.
+User=get_user_model()
 @api_view(['POST'])
 def post_messages(request):
     serializer=MessageSerializer(data=request.data)
@@ -74,9 +77,7 @@ def get_current_user(request):
         return Response({'error':'User is not authenticated'}, status=401)
 
 @api_view(['GET'])
-#@permission_classes(IsAuthenticated)
 def get_messages(request,roomId):
-    print(roomId)
     try:
         messages = Messages.objects.filter(room=roomId)
         serializer=MessageSerializer(messages, many=True)
@@ -106,4 +107,43 @@ def get_connections(request):
     }
     serializer=ConnectionsSerializer(data)
     return Response(serializer.data)
+
+@api_view(['GET','PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser,FormParser])
+def profile_picture_view(request):
+    user=request.user
+    if request.method=='GET':
+        serializer=ProfileSerializer(user)
+        return Response(serializer.data)
+
+    elif request.method=='PUT':
+        serializer=ProfileSerializer(user,data=request.data,partial=True )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+   
+@api_view(['GET']) 
+def getProfilePicture(request,pk):
+    user=User.objects.get(id=pk)
+    serializer=ProfileSerializer(user)
+    return Response(serializer.data)
+    
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+def delete_account(request):
+    user=request.user
+    user.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+def logout(request):
+    request.user.auth_token.delete()
+    return Response(status=status.HTTP_200_OK)
+
     
