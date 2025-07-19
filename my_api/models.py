@@ -6,7 +6,8 @@ from django.contrib.auth.models import User,AbstractUser
 from django.conf import settings
 # Create your models here.
 class Profile(AbstractUser):
-    profile_picture=models.ImageField(upload_to='profile_pictures', default='/profile_pictures/ovaries.jpg')
+    profile_picture=models.URLField(blank=True,null=True)
+    
     
 class ChatRoom(models.Model):
     id=models.CharField(max_length=255,primary_key=True)
