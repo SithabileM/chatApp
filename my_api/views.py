@@ -111,7 +111,6 @@ def get_connections(request):
 @api_view(['GET','PUT'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-@parser_classes([MultiPartParser,FormParser])
 def profile_picture_view(request):
     user=request.user
     if request.method=='GET':
