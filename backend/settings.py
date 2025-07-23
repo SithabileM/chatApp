@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'my_api'
+    'my_api',
+    'corsheaders',
 ]
 
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
 STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -146,7 +147,7 @@ MEDIA_URL='/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS=[ 'http://localhost:3000',
+CORS_ALLOWED_ORIGINS=[ 'https://chat-app-frontend-7lk8t2x7k-sithabilems-projects.vercel.app','http://localhost:3000',
 ]
 
 AUTH_USER_MODEL='my_api.Profile'
