@@ -12,16 +12,15 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
 import dj_database_url
 
-load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SUPABASE_PROJECT_ID=os.getenv("SUPABASE_PROJECT_ID")
-SUPABASE_API_KEY=os.getenv("SUPABASE_API_KEY")
-SUPABASE_BUCKET=os.getenv("SUPABASE_BUCKET")
+SUPABASE_PROJECT_ID=os.environ.get("SUPABASE_PROJECT_ID")
+SUPABASE_API_KEY=os.environ.get("SUPABASE_API_KEY")
+SUPABASE_BUCKET=os.environ.get("SUPABASE_BUCKET")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -95,8 +94,6 @@ DATABASES = {
 REST_FRAMEWORK={
     'DEFAULT_PARSER_CLASSES':[
         'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.FormParser',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES':(
         'rest_framework.authentication.TokenAuthentication',
