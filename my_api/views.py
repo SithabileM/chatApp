@@ -10,7 +10,7 @@ from .models import ChatRoom
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser,JSONParser
 
 #from .models import Messages
 # Create your views here.
@@ -111,7 +111,7 @@ def get_connections(request):
 @api_view(['GET','PUT'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-@parser_classes([MultiPartParser])
+@parser_classes([JSONParser,MultiPartParser])
 def profile_picture_view(request):
     user=request.user
     if request.method=='GET':
