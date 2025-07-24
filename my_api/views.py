@@ -118,10 +118,12 @@ def profile_picture_view(request):
         return Response(serializer.data)
 
     elif request.method=='PUT':
-        serializer=ProfileSerializer(user,data=request.data,partial=True )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        file_url=request.data.get('file_url')
+        upload=Profile.objects.create(user=user,profile_picture=file_url)
+        #serializer=ProfileSerializer(user,data=request.data,partial=True )
+        #if serializer.is_valid():
+            #serializer.save()
+        return Response(ProfileSerializer(upload).data,status=201)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
    
 @api_view(['GET']) 
