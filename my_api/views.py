@@ -125,6 +125,7 @@ def profile_picture_view(request):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
    
 @api_view(['GET']) 
+@parser_classes([MultiPartParser])
 def getProfilePicture(request,pk):
     user=User.objects.get(id=pk)
     serializer=ProfileSerializer(user)
