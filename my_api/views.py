@@ -125,6 +125,7 @@ def profile_picture_view(request):
             #serializer.save()
         return Response(ProfileSerializer(upload).data,status=201)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
    
 @api_view(['GET']) 
 @parser_classes([MultiPartParser])
