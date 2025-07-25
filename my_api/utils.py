@@ -1,3 +1,4 @@
+'''
 import requests
 import os
 from django.conf import settings
@@ -18,3 +19,4 @@ def upload_image_to_supabase(file, filename):
         return url  # public URL to the image
     else:
         raise Exception(f"Upload failed: {response.status_code} - {response.text}")
+        '''
