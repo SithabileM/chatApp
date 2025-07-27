@@ -12,7 +12,6 @@ urlpatterns = [
     path('get_messages/<str:roomId>',views.get_messages,name='get_messages'),
     path('get_connections',views.get_connections, name='get_connections'),
     path('profile_picture',views.profile_picture_view,name='profile_picture'),
-    path('getProfilePicture/<int:pk>',views.getProfilePicture,name='profile'),
     path('users/delete',views.delete_account,name='delete_account'),
     path('logout',views.logout,name='logout'),
     
