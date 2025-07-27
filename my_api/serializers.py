@@ -1,7 +1,7 @@
 from .models import ChatRoom,Messages,Connections,Profile
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .utils import upload_image_to_supabase
+
 
 User=get_user_model()
 class ChatRoomSerializer(serializers.ModelSerializer):
