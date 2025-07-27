@@ -30,4 +30,4 @@ class ProfileSerializer(serializers.ModelSerializer):
     #profile_picture=serializers.ImageField(max_length=255,use_url=True)
     class Meta:
         model=Profile
-        fields=['profile_picture']
+        fields=['username','profile_picture']

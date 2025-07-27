@@ -15,5 +15,5 @@ urlpatterns = [
     re_path('test_token', views.test_token),
     path("",include("my_api.urls"))
     
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
