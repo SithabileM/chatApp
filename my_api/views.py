@@ -122,9 +122,6 @@ def profile_picture_view(request):
         serializer=ProfileSerializer(user,data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
-            myUser=Profile.objects.get(username=user.username)
-            myUser.profile_picture=request.data.get('profile_picture')
-            myUser.save()
             return Response(serializer.data)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
