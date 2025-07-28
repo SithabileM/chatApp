@@ -119,8 +119,7 @@ def profile_picture_view(request):
         return Response(serializer.data)
 
     elif request.method=='PUT':
-        profile=Profile.objects.get(user=user)
-        serializer=ProfileSerializer(profile,data=request.data,partial=True)
+        serializer=ProfileSerializer(user,data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
