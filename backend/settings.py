@@ -88,6 +88,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
@@ -149,7 +150,7 @@ MEDIA_URL='/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS=[ 'https://chat-app-frontend-7lk8t2x7k-sithabilems-projects.vercel.app','http://localhost:3000',
+CORS_ALLOWED_ORIGINS=[ 'https://chat-app-frontend-nwmrdr1er-sithabilems-projects.vercel.app','http://localhost:3000',
 ]
 
 AUTH_USER_MODEL='my_api.Profile'
