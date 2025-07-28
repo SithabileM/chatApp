@@ -150,7 +150,7 @@ MEDIA_URL='/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS=[ 'https://chat-app-frontend-4jss7b90b-sithabilems-projects.vercel.app','http://localhost:3000',
+CORS_ALLOWED_ORIGINS=[ 'https://chat-app-frontend-myrdaeyge-sithabilems-projects.vercel.app','http://localhost:3000',
 ]
 
 AUTH_USER_MODEL='my_api.Profile'
