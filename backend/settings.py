@@ -89,11 +89,18 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+'''
 
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
-    
+'''
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            }
+    }
 
 REST_FRAMEWORK={
     'DEFAULT_PARSER_CLASSES':[
