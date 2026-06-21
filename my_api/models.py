@@ -6,7 +6,7 @@ from django.contrib.auth.models import User,AbstractUser
 from django.conf import settings
 # Create your models here.
 class Profile(AbstractUser):
-    profile_picture=models.URLField(default='https://noruhbvggbhumyrrxpja.supabase.co/storage/v1/object/public/user-images/1782038716047_MyImage.jpg') 
+    profile_picture=models.URLField(default='https://noruhbvggbhumyrrxpja.supabase.co/storage/v1/object/public/user-images/1782040142902_20240704_114925.jpg') 
     
     
 class ChatRoom(models.Model):
